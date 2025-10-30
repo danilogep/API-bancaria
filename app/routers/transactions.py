@@ -1,5 +1,3 @@
-# app/routers/transactions.py
-
 from fastapi import APIRouter, Depends, HTTPException, status
 from sqlalchemy.ext.asyncio import AsyncSession
 
@@ -18,7 +16,6 @@ async def deposit(
     db: AsyncSession = Depends(get_db),
     current_user: models.User = Depends(auth.get_current_user)
 ):
-    # --- CORREÇÃO AQUI ---
     # Salvamos o ID imediatamente para evitar problemas com o objeto 'current_user' expirando.
     user_id = current_user.id
 
@@ -41,7 +38,6 @@ async def withdraw(
     db: AsyncSession = Depends(get_db),
     current_user: models.User = Depends(auth.get_current_user)
 ):
-    # --- A MESMA CORREÇÃO APLICADA AQUI ---
     user_id = current_user.id
 
     if transaction.amount <= 0:
@@ -64,7 +60,6 @@ async def get_statement(
     db: AsyncSession = Depends(get_db),
     current_user: models.User = Depends(auth.get_current_user)
 ):
-    # Esta função não faz commits, então não precisa de alteração.
     account = await crud.get_account_by_user_id(db, user_id=current_user.id)
     if not account:
         raise HTTPException(status_code=404, detail="Conta não encontrada")

@@ -1,5 +1,3 @@
-# app/routers/users.py
-
 from fastapi import APIRouter, Depends, HTTPException, status
 from fastapi.security import OAuth2PasswordRequestForm
 from sqlalchemy.ext.asyncio import AsyncSession
@@ -8,13 +6,10 @@ from datetime import timedelta
 from .. import crud, models, auth
 from ..database import get_db
 
-# --- THIS IS THE CRUCIAL LINE THAT WAS MISSING OR MISPLACED ---
-# It must come BEFORE you use @router.post()
 router = APIRouter(
     prefix="/users",
     tags=["users"],
 )
-# ----------------------------------------------------------------
 
 @router.post("/", response_model=models.UserReadWithAccount, status_code=status.HTTP_201_CREATED, summary="Cria um novo usuário e sua conta bancária")
 async def create_user_endpoint(

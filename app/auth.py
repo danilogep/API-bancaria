@@ -50,8 +50,6 @@ async def get_current_user(token: str = Depends(oauth2_scheme), db: AsyncSession
     statement = select(models.User).where(models.User.username == token_data.username)
     results = await db.execute(statement)
     
-    # --- CORREÇÃO FINAL AQUI ---
-    # Garante que estamos retornando o objeto User, e não o Row.
     user = results.scalars().first()
     
     if user is None:
